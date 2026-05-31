@@ -1,3 +1,9 @@
+import os
+import sys
+
+# Ensure local modules are discoverable
+sys.path.append(os.path.dirname(__file__))
+
 from fastapi import FastAPI, UploadFile, File, Form
 from pydantic import BaseModel, Field
 import json
