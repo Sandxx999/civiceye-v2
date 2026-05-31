@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "install:all": "cd frontend/citizen-app && npm install && cd ../admin-dashboard && npm install",
-    "build": "node scripts/build-vercel.js",
+    "build": "npm run install:all && node scripts/build-vercel.js",
     "dev": "vercel dev"
   }
 }
