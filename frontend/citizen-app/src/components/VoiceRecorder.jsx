@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Mic, Square, Loader2 } from "lucide-react";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
+import { translations } from "../utils/constants";
 
 export default function VoiceRecorder({ onTranscript, language }) {
   const { isRecording, audioBlob, toggleRecording } = useVoiceRecorder();
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcript, setTranscript] = useState("");
+
+  const t = translations[language];
 
   useEffect(() => {
     if (audioBlob) {
@@ -15,13 +18,13 @@ export default function VoiceRecorder({ onTranscript, language }) {
 
   const handleTranscription = async (blob) => {
     setIsProcessing(true);
-    setTranscript("Processing voice...");
+    setTranscript(t.processing);
     
     try {
       // In a real app, we'd upload this to the backend.
       // For now, let's prepare the form to handle the blob.
       onTranscript(blob); 
-      setTranscript("Voice note attached");
+      setTranscript(t.attached);
     } catch (err) {
       console.error("Transcription error:", err);
       setTranscript("Transcription failed");
@@ -33,9 +36,9 @@ export default function VoiceRecorder({ onTranscript, language }) {
   return (
     <div className="recorder">
       <div>
-        <strong>{isRecording ? "Listening..." : "Voice note"}</strong>
+        <strong>{isRecording ? t.listening : t.voice_note}</strong>
         <div className="hint">
-          {isRecording ? "Recording your issue..." : (isProcessing ? "Analyzing audio..." : transcript || "Optional voice context")}
+          {isRecording ? t.listening : (isProcessing ? t.processing : transcript || t.voice_hint)}
         </div>
       </div>
       {isRecording && <span className="recording-dot" />}

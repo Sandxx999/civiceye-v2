@@ -168,6 +168,7 @@ def stats():
         "open": len([item for item in complaints if item["status"] != "Resolved"]),
         "high_priority": len([item for item in complaints if item["priority"] == "High"]),
         "resolved": len([item for item in complaints if item["status"] == "Resolved"]),
+        "assigned": len([item for item in complaints if item["status"] == "Assigned"]),
         "duplicate_risk": round(sum(item["duplicate_confidence"] for item in complaints) / len(complaints)) if complaints else 0,
     }
 

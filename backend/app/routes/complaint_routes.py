@@ -1,10 +1,22 @@
-from flask import Blueprint, request
+import os
+from flask import Blueprint, request, send_from_directory, current_app
 
 from ..services.complaint_service import create_complaint, get_complaint
 from ..utils.response import fail, ok
 from ..utils.validators import validate_complaint
 
 complaint_bp = Blueprint("complaints", __name__)
+
+
+@complaint_bp.get("/voice/<ticket_id>")
+def get_voice(ticket_id):
+    if os.getenv("VERCEL") or os.getenv("VERCEL_ENV"):
+        upload_dir = "/tmp/uploads/voice_notes"
+    else:
+        upload_dir = os.path.join(current_app.root_path, "..", "uploads", "voice_notes")
+    
+    filename = f"{ticket_id.upper()}_voice.webm"
+    return send_from_directory(upload_dir, filename)
 
 
 @complaint_bp.post("/complaints")

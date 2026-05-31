@@ -5,17 +5,20 @@ import SubmitComplaint from "./pages/SubmitComplaint.jsx";
 import TrackComplaint from "./pages/TrackComplaint.jsx";
 import Success from "./pages/Success.jsx";
 import LanguageToggle from "./components/LanguageToggle.jsx";
-
-const tabs = [
-  { id: "home", label: "Civic Feed", icon: Activity },
-  { id: "submit", label: "Report", icon: Radar },
-  { id: "track", label: "Track", icon: Search },
-];
+import { translations } from "./utils/constants";
 
 export default function App() {
   const [page, setPage] = useState("home");
   const [language, setLanguage] = useState("en");
   const [lastTicket, setLastTicket] = useState("");
+
+  const t = translations[language];
+
+  const tabs = [
+    { id: "home", label: t.feed, icon: Activity },
+    { id: "submit", label: t.report, icon: Radar },
+    { id: "track", label: t.track, icon: Search },
+  ];
 
   const handleSuccess = (ticketId) => {
     setLastTicket(ticketId);
@@ -27,7 +30,7 @@ export default function App() {
       <header className="topbar">
         <button className="brand" onClick={() => setPage("home")} aria-label="CivicEye home">
           <img src="/logo.svg" alt="" />
-          <span>CivicEye AI</span>
+          <span>{t.title}</span>
         </button>
         <nav className="nav-tabs" aria-label="Primary">
           {tabs.map((tab) => {
@@ -44,10 +47,10 @@ export default function App() {
       </header>
 
       <main>
-        {page === "home" && <Home onStart={() => setPage("submit")} />}
+        {page === "home" && <Home onStart={() => setPage("submit")} language={language} />}
         {page === "submit" && <SubmitComplaint language={language} onSuccess={handleSuccess} />}
-        {page === "track" && <TrackComplaint initialTicket={lastTicket} />}
-        {page === "success" && <Success ticketId={lastTicket} onTrack={() => setPage("track")} onNew={() => setPage("submit")} />}
+        {page === "track" && <TrackComplaint initialTicket={lastTicket} language={language} />}
+        {page === "success" && <Success ticketId={lastTicket} onTrack={() => setPage("track")} onNew={() => setPage("submit")} language={language} />}
       </main>
 
       <aside className="trust-strip">

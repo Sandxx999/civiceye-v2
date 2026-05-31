@@ -1,6 +1,6 @@
 import { Crosshair } from "lucide-react";
 
-export default function LocationPicker({ value, onChange }) {
+export default function LocationPicker({ value, onChange, label, demoLabel }) {
   const useDemoLocation = () => {
     onChange({ ...value, address: "MG Road, Ward 12, Civic Center", lat: "17.3850", lng: "78.4867" });
   };
@@ -8,7 +8,7 @@ export default function LocationPicker({ value, onChange }) {
   return (
     <div className="map-picker">
       <label className="field">
-        Address or landmark
+        {label || "Address or landmark"}
         <input value={value.address} onChange={(event) => onChange({ ...value, address: event.target.value })} placeholder="Street, ward, landmark" />
       </label>
       <div className="grid-2">
@@ -22,7 +22,7 @@ export default function LocationPicker({ value, onChange }) {
         </label>
       </div>
       <button className="ghost-btn" type="button" onClick={useDemoLocation}>
-        <Crosshair size={17} /> Use demo location
+        <Crosshair size={17} /> {demoLabel || "Use demo location"}
       </button>
     </div>
   );
