@@ -1,0 +1,7 @@
+Flask
+flask-cors
+requests
+fastapi
+pydantic
+python-multipart
+google-genai

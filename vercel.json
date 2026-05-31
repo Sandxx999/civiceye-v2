@@ -1,36 +1,13 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "public"
-      }
-    },
-    {
-      "src": "backend/run.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": "backend/**"
-      }
-    },
-    {
-      "src": "ai-service/main.py",
-      "use": "@vercel/python",
-      "config": {
-        "includeFiles": "ai-service/**"
-      }
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/ai/(.*)",
-      "destination": "ai-service/main.py"
+      "destination": "/api/ai.py"
     },
     {
       "source": "/api/(.*)",
-      "destination": "backend/run.py"
+      "destination": "/api/index.py"
     },
     {
       "source": "/admin/(.*)",
