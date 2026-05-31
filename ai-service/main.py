@@ -11,7 +11,10 @@ from providers.assemblyai_client import transcribe as transcribe_assembly
 from providers.gemini_client import transcribe_with_gemini
 import os
 
-app = FastAPI(title="CivicEye AI Service")
+app = FastAPI(
+    title="CivicEye AI Service",
+    root_path="/api/ai" if os.getenv("VERCEL") else ""
+)
 
 def transcribe(content):
     if os.getenv("GEMINI_API_KEY"):

@@ -1,0 +1,13 @@
+.git
+node_modules
+venv
+__pycache__
+*.pyc
+.env
+uploads
+backend/civiceye.db
+frontend/citizen-app/node_modules
+frontend/admin-dashboard/node_modules
+frontend/citizen-app/dist
+frontend/admin-dashboard/dist
+!public

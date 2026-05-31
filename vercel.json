@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/run.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "ai-service/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/ai/(.*)",
+      "destination": "ai-service/main.py"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "backend/run.py"
+    },
+    {
+      "source": "/admin/(.*)",
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

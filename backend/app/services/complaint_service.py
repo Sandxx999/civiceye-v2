@@ -73,7 +73,12 @@ def create_complaint(payload):
     voice_path = None
     if voice_note and hasattr(voice_note, "read"):
         ticket_id_temp = generate_ticket_id() # Use a stable ID for the filename
-        upload_dir = os.path.join(current_app.root_path, "..", "uploads", "voice_notes")
+        
+        if os.getenv("VERCEL") or os.getenv("VERCEL_ENV"):
+            upload_dir = "/tmp/uploads/voice_notes"
+        else:
+            upload_dir = os.path.join(current_app.root_path, "..", "uploads", "voice_notes")
+            
         os.makedirs(upload_dir, exist_ok=True)
         filename = f"{ticket_id_temp}_voice.webm"
         voice_path = os.path.join(upload_dir, filename)
@@ -90,7 +95,7 @@ def create_complaint(payload):
     timeline = [{"label": "Complaint received", "at": created}, {"label": f"Routed to {analysis['department']}", "at": created}]
     
     # Add transcript to description if it exists
-    final_description = payload["description"].strip()
+    final_description = payload.get("description", "").strip()
     if analysis.get("transcript"):
         final_description += f"\n\n[Voice Transcript]: {analysis['transcript']}"
 

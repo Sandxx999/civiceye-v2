@@ -16,7 +16,7 @@ def create_app(config_class=Config):
 
     init_database(app.config["DATABASE_PATH"])
 
-    app.register_blueprint(health_bp)
+    app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(complaint_bp, url_prefix="/api")
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
